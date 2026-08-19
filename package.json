@@ -1,0 +1,15 @@
+{
+  "name": "lakshmi-chit-fund",
+  "version": "1.0.0",
+  "description": "Study group accountability tracker with fine management",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "express": "^4.21.0",
+    "sql.js": "^1.11.0"
+  }
+}
