@@ -32,7 +32,21 @@ async function initDatabase() {
         }
       }
 
-      const SQL = await initSqlJs();
+      const wasmCandidatePaths = [
+        path.join(__dirname, 'sql-wasm.wasm'),
+        path.join(__dirname, '..', 'node_modules', 'sql.js', 'dist', 'sql-wasm.wasm'),
+        path.join(path.dirname(require.resolve('sql.js')), 'sql-wasm.wasm')
+      ];
+      const foundWasm = wasmCandidatePaths.find(p => fs.existsSync(p));
+
+      const SQL = await initSqlJs({
+        locateFile: file => {
+          if (file.endsWith('.wasm') && foundWasm) {
+            return foundWasm;
+          }
+          return file;
+        }
+      });
 
       if (fs.existsSync(DB_PATH)) {
         const buffer = fs.readFileSync(DB_PATH);
